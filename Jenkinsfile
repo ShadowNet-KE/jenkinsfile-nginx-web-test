@@ -3,13 +3,13 @@ pipeline {
   agent { label 'docker' }
 
   parameters {
-      string(name: 'name_container', defaultValue: 'proyecto-qa', description: 'nombre del docker')
-      string(name: 'name_imagen', defaultValue: 'iproyecto-qa', description: 'nombre de la imagen')
-      string(name: 'tag_imagen', defaultValue: 'latest', description: 'etiqueta de la imagen')
-      string(name: 'puerto_imagen', defaultValue: '81', description: 'puerto a publicar')
+      string(name: 'name_container', defaultValue: 'proyecto-qa', description: 'docker name')
+      string(name: 'image_name', defaultValue: 'iproyecto-qa', description: 'image name')
+      string(name: 'image_tag', defaultValue: 'latest', description: 'image tag')
+      string(name: 'image_port', defaultValue: '81', description: 'port to publish')
   }
   environment {
-    name_final = "${name_container}${tag_imagen}${puerto_imagen}"
+    name_final = "${name_container}${image_tag}${image_port}"
   }
   stages {
     stage('stop/rm') {
@@ -34,7 +34,7 @@ pipeline {
       steps {
         script {
           sh '''
-            docker build . -t ${name_imagen}:${tag_imagen}
+            docker build . -t ${image_name}:${image_tag}
           '''
         }
       }
@@ -44,7 +44,7 @@ pipeline {
         script {
           /* groovylint-disable-next-line GStringExpressionWithinString */
           sh '''
-            docker run -dp ${puerto_imagen}:80 --name ${name_final} ${name_imagen}:${tag_imagen}
+            docker run -dp ${image_port}:80 --name ${name_final} ${image_name}:${image_tag}
           '''
         }
       }
