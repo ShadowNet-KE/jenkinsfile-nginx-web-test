@@ -1,6 +1,6 @@
 
 pipeline {
-  agent { label 'jenkins-agent' }
+  agent { label 'docker' }
 
   parameters {
       string(name: 'name_container', defaultValue: 'proyecto-qa', description: 'nombre del docker')
