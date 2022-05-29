@@ -1,6 +1,6 @@
 
 pipeline {
-  agent { label 'jenkins-agent' }
+  agent { label 'dind-1.0.0' }
 
   parameters {
       string(name: 'name_container', defaultValue: 'proyecto-qa', description: 'docker name')
